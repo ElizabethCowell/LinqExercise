@@ -24,30 +24,106 @@ namespace LinqExercise
              */
 
             //Print the Sum and Average of numbers
+            var sum = numbers.Sum(x => x);
+            Console.WriteLine("Sum");
+            Console.WriteLine(sum);
+            var average = numbers.Average(x => x);
+            Console.WriteLine("Average");
+            Console.WriteLine(average);
 
             //Order numbers in ascending order and decsending order. Print each to console.
+            Console.WriteLine("Ascending");
+
+            var ascending = numbers.OrderBy(x => x);
+            foreach (var num in ascending)
+            {
+                Console.WriteLine(num);
+            }
+
+            Console.WriteLine("Descending");
+            var descending = numbers.OrderByDescending(x => x);
+            foreach (var num in descending)
+            {
+                Console.WriteLine(num);
+            }
 
             //Print to the console only the numbers greater than 6
+            Console.WriteLine("Greater than 6");
+
+            var larger = numbers.Where(x => x > 6);
+            foreach (var num in larger)
+            {
+                Console.WriteLine(num);
+            }
 
             //Order numbers in any order (acsending or desc) but only print 4 of them **foreach loop only!**
+            Console.WriteLine("Acsending first 4");
+            var firstFour = numbers.OrderBy(x => x).Take(4);
+            foreach( var num in firstFour)
+            {
+                Console.WriteLine(num);
+            }
 
             //Change the value at index 4 to your age, then print the numbers in decsending order
+            Console.WriteLine("Age in index 4 decending");
+            numbers[4] = 36;
+            Console.WriteLine("Before decending:");
+            foreach (var num in numbers)
+                {
+                Console.Write(num + ", ");
+            }
+            Console.WriteLine("");
+            var age = numbers.OrderByDescending(x => x);
+            foreach (var num in age)
+            {
+                Console.WriteLine(num);
+            }
 
             // List of employees ***Do not remove this***
             var employees = CreateEmployees();
 
             //Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S.
             //Order this in acesnding order by FirstName.
+            Console.WriteLine("Employees");
+            var empList = employees.Where(x => x.FirstName.StartsWith("C") || x.FullName.StartsWith("S")).OrderBy(x => x.FirstName);
+            foreach (var person in empList)
+            {
+                Console.WriteLine(person.FullName);
+            }
 
             //Print all the employees' FullName and Age who are over the age 26 to the console.
             //Order this by Age first and then by FirstName in the same result.
+            Console.WriteLine("By age then by first name");
+            var aboveAge = employees.Where(x => x.Age > 26).OrderBy(x => x.Age).ThenBy(x => x.FirstName);
+            foreach (var employee in aboveAge)
+            {
+                Console.WriteLine(employee.FullName + " " + employee.Age);
+            }
+
 
             //Print the Sum and then the Average of the employees' YearsOfExperience
+            Console.WriteLine("Sum of Experience");
+            var YOESum = employees.Sum(x => x.YearsOfExperience);
+            Console.WriteLine(YOESum);
+            Console.WriteLine("Average of Experience");
+            var YOEAverage = employees.Average(x => x.YearsOfExperience);
+            Console.WriteLine(YOEAverage);
             //if their YOE is less than or equal to 10 AND Age is greater than 35
-
+            Console.WriteLine("Experience & Age");
+            var exAge = employees.Where(x => x.YearsOfExperience <= 10 && x.Age < 35);
+            foreach(var emp in exAge)
+            {
+                Console.WriteLine(emp.FullName);
+            }
             //Add an employee to the end of the list without using employees.Add()
+            var newGuy = employees.Append(new Employee("Takko", "Taco", 25, 450)).ToList();
+            foreach(var emp in newGuy)
+            {
+                Console.WriteLine(emp.FullName + " Age:" + emp.Age + " Experience:" + emp.YearsOfExperience);
+            }
+         
 
-            
+
             Console.WriteLine();
 
             Console.ReadLine();
